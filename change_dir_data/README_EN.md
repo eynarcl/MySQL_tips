@@ -115,3 +115,4 @@ Now that you’ve restarted MySQL and confirmed that it’s using the new locati
 
 
 *Reference: [Digital Ocean community](https://www.digitalocean.com/community/tutorials/how-to-change-a-mysql-data-directory-to-a-new-location-on-centos-7)*
+
