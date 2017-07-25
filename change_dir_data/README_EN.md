@@ -47,22 +47,18 @@ or
 
 
 You can be sure it’s shut down if the final line of the output tells you the server is stopped:
-
-´´
-Output
-. . .
-Jul 18 11:24:20 ubuntu-512mb-nyc1-01 systemd[1]: Stopped MySQL Community Server.
-´´
+    
+    Output
+    . . .
+    Jul 18 11:24:20 ubuntu-512mb-nyc1-01 systemd[1]: Stopped MySQL Community Server.
 
 Now that the server is shut down, we’ll copy the existing database directory to the new location with rsync. Using the -a flag preserves the permissions and other directory properties, while-v provides verbose output so you can follow the progress.
 
 Note: Be sure there is no trailing slash on the directory, which may be added if you use tab completion. When there’s a trailing slash, rsync will dump the contents of the directory into the mount point instead of transferring it into a containing mysql directory:
 
-
     sudo rsync -av /var/lib/mysql /mnt/volume-nyc1-01
 
 Once the rsync is complete, rename the current folder with a .bak extension and keep it until we’ve confirmed the move was successful. By re-naming it, we’ll avoid confusion that could arise from files in both the new and the old location:
-
 
     sudo mv /var/lib/mysql /var/lib/mysql.bak
     
@@ -75,20 +71,21 @@ MySQL has several ways to override configuration values. By default, the datadir
     sudo vi /etc/my.cnf
 
 Find the line in the [mysqld] block that begins with datadir=, which is separated from the block heading with several comments. Change the path which follows to reflect the new location. In addition, since the socket was previously located in the data directory, we'll need to update it to the new location:
-/etc/my.cnf
 
-[mysqld]
-. . .
-datadir=/mnt/volume-nyc1-01/mysql
-socket=/mnt/volume-nyc1-01/mysql/mysql.sock
-. . .
+    /etc/my.cnf
+
+    [mysqld]
+    . . .
+    datadir=/mnt/volume-nyc1-01/mysql
+    socket=/mnt/volume-nyc1-01/mysql/mysql.sock
+    . . .
 
 After updating the existing lines, we'll need to add configuration for the mysql client. Insert the following settings at the bottom of the file so it won’t split up directives in the [mysqld] block:
 /etc/my.cnf
 
-[client]
-port=3306
-socket=/mnt/volume-nyc1-01/mysql/mysql.sock
+    [client]
+    port=3306
+    socket=/mnt/volume-nyc1-01/mysql/mysql.sock
 
 When you’re done, hit ESCAPE, then type :wq! to save and exit the file.
 Step 3 — Restarting MySQL
@@ -106,13 +103,13 @@ Look at the value for the data directory again:
 
     select @@datadir;
 
-Output
-+----------------------------+
-| @@datadir                  |
-+----------------------------+
-| /mnt/volume-nyc1-01/mysql/ |
-+----------------------------+
-1 row in set (0.01 sec)
+    Output
+    +----------------------------+
+    | @@datadir                  |
+    +----------------------------+
+    | /mnt/volume-nyc1-01/mysql/ |
+    +----------------------------+
+    1 row in set (0.01 sec)
 
 Now that you’ve restarted MySQL and confirmed that it’s using the new location, take the opportunity to ensure that your database is fully functional. Once you’ve verified the integrity of any existing data, you can remove the backup data directory with sudo rm -Rf /var/lib/mysql.bak.
 
