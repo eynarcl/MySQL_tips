@@ -4,9 +4,10 @@ Brief HowTo to change MySQL data directory location.
 ## Step 1 — Moving the MySQL Data Directory
 
 To prepare for moving MySQL’s data directory, let’s verify the current location by starting an interactive MySQL session using the administrative credentials.
-´´
+
+    ´´
     mysql -u root -p
-´´
+    ´´
 
 When prompted, supply the MySQL root password. Then from the MySQL prompt, select the data directory:
 ´´
