@@ -5,48 +5,46 @@ Brief HowTo to change MySQL data directory location.
 
 To prepare for moving MySQL’s data directory, let’s verify the current location by starting an interactive MySQL session using the administrative credentials.
 
-    ´´
     mysql -u root -p
-    ´´
+    
 
 When prompted, supply the MySQL root password. Then from the MySQL prompt, select the data directory:
-´´
+
     select @@datadir;
 
-Output
-+-----------------+
-| @@datadir       |
-+-----------------+
-| /var/lib/mysql/ |
-+-----------------+
-1 row in set (0.00 sec)
-´´
+    Output
+    +-----------------+
+    | @@datadir       |
+    +-----------------+
+    | /var/lib/mysql/ |
+    +-----------------+
+    1 row in set (0.00 sec)
+
 
 This output confirms that MySQL is configured to use the default data directory, /var/lib/mysql/, so that’s the directory we need to move. Once you've confirmed this, type exit and press “ENTER” to leave the monitor:
-´´
+
     exit
-´´
+
 
 To ensure the integrity of the data, we’ll shut down MySQL before we actually make changes to the data directory:
 
-´´
+
     sudo systemctl stop mysqld
-´´
+
 or 
 
-´´
+
   sudo services mysql stop
-´´
+
 
 systemctl doesn't display the outcome of all service management commands, so if you want to be sure you've succeeded, use the following command:
-´´
+
     sudo systemctl status mysqld
-´´
+
 or 
 
-´´
-services mysqld status
-´´
+    services mysqld status
+
 
 You can be sure it’s shut down if the final line of the output tells you the server is stopped:
 
