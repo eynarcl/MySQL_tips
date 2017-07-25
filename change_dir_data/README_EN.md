@@ -114,4 +114,4 @@ Look at the value for the data directory again:
 Now that you’ve restarted MySQL and confirmed that it’s using the new location, take the opportunity to ensure that your database is fully functional. Once you’ve verified the integrity of any existing data, you can remove the backup data directory with sudo rm -Rf /var/lib/mysql.bak.
 
 
-Reference: [Digital Ocean community](https://www.digitalocean.com/community/tutorials/how-to-change-a-mysql-data-directory-to-a-new-location-on-centos-7)
+*Reference: [Digital Ocean community](https://www.digitalocean.com/community/tutorials/how-to-change-a-mysql-data-directory-to-a-new-location-on-centos-7)
