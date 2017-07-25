@@ -48,24 +48,25 @@ services mysqld status
 ´´
 
 You can be sure it’s shut down if the final line of the output tells you the server is stopped:
+
 ´´
 Output
 . . .
 Jul 18 11:24:20 ubuntu-512mb-nyc1-01 systemd[1]: Stopped MySQL Community Server.
 ´´
+
 Now that the server is shut down, we’ll copy the existing database directory to the new location with rsync. Using the -a flag preserves the permissions and other directory properties, while-v provides verbose output so you can follow the progress.
 
 Note: Be sure there is no trailing slash on the directory, which may be added if you use tab completion. When there’s a trailing slash, rsync will dump the contents of the directory into the mount point instead of transferring it into a containing mysql directory:
 
-´´
+
     sudo rsync -av /var/lib/mysql /mnt/volume-nyc1-01
-´´
 
 Once the rsync is complete, rename the current folder with a .bak extension and keep it until we’ve confirmed the move was successful. By re-naming it, we’ll avoid confusion that could arise from files in both the new and the old location:
 
-´´
+
     sudo mv /var/lib/mysql /var/lib/mysql.bak
-´´
+    
 Now we’re ready to turn our attention to configuration.
 
 ## Step 2 — Pointing to the New Data Location
